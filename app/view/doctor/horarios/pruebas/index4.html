@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Disponibilidad Semanal - Clínica Bienestar</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script>
+tailwind.config = {
+    darkMode: "class",
+    theme: {
+        extend: {
+            colors: {
+                "primary": "#11b4d4",
+                "primary-subtle": "#e0f7fa",
+                "secondary": "#f472b6",
+                "success": "#34d399",
+                "warning": "#fbbf24",
+                "background-light": "#f6f8f8",
+                "background-dark": "#101f22",
+                "text-light": "#101f22",
+                "text-dark": "#f6f8f8",
+                "surface-light": "#ffffff",
+                "surface-dark": "#1a2c2f",
+                "border-light": "#e0e7e9",
+                "border-dark": "#2a3c3f"
+            },
+            fontFamily: {
+                "display": ["Inter", "sans-serif"]
+            },
+        },
+    },
+}
+</script>
+<style>
+.material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+}
+.window {
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+.time-slot:checked+label {
+    background-color: #11b4d4; color: white;
+    border-color: #11b4d4;
+}
+html.dark .time-slot:checked+label {
+    background-color: #11b4d4; color: #101f22;
+}
+.time-slot:disabled+label {
+    background-color: #f3f4f6;
+    cursor: not-allowed;
+    color: #9ca3af;
+    border-color: transparent;
+}
+html.dark .time-slot:disabled+label {
+    background-color: rgba(0,0,0,0.2);
+    color: #4b5563;
+}
+.schedule-preset:checked + label {
+    background-color: #11b4d4;
+    color: white;
+}
+html.dark .schedule-preset:checked + label {
+    background-color: #11b4d4;
+    color: #101f22;
+}
+/* changed code */
+/* permitir scroll en toda la página (el sidebar permanece fijo) */
+/* no bloquear overflow global; el sidebar es fixed y no se moverá */
+html, body, #page-container {
+  min-height: 100vh;
+  height: auto;
+  overflow-y: auto; /* scroll de la página habilitado */
+}
+
+/* Main: permitir que el contenido crezca y deje que la página haga scroll */
+main {
+  overflow: visible;
+  -webkit-overflow-scrolling: auto;
+}
+
+/* Quitar límite y scroll interno de .window para que la tabla no esté dentro de un cuadro con scroll */
+.window {
+  max-height: none;
+  overflow: visible;
+  -webkit-overflow-scrolling: auto;
+}
+
+/* Ajustes responsive para móvil: mantener separación y legibilidad */
+@media (max-width: 768px) {
+  main {
+    padding: 0.75rem;
+  }
+  .window {
+    padding: 0.75rem;
+  }
+  /* en móvil reducimos gap y tamaño de etiquetas para que quepa mejor */
+  .window .grid .time-slot + label,
+  .window .grid label {
+    padding: 0.5rem;
+    font-size: 0.85rem;
+  }
+}
+
+/* Si quieres que al abrir el sidebar en móvil se bloquee el scroll de la página,
+   podemos alternar una clase que setee overflow: hidden en body; avísame si lo deseas. */
+</style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-text-light dark:text-text-dark" id="page-container">
+<div class="flex min-h-screen">
+<a id="sidebar-overlay" class="fixed inset-0 bg-black/60 z-30 opacity-0 pointer-events-none lg:hidden transition-opacity duration-300"></a>
+<aside id="sidebar" class="w-64 bg-[#0d1b2a] text-white p-4 flex flex-col justify-between fixed h-screen lg:translate-x-0 -translate-x-full transition-transform duration-300 z-40">
+  <div>
+    <div class="flex items-center gap-4 mb-8 p-2">
+      <div class="bg-primary/20 p-2 rounded-full">
+        <span class="material-symbols-outlined text-primary !text-2xl">health_and_safety</span>
+      </div>
+      <span class="font-bold text-xl">Clínica Bienestar</span>
+    </div>
+    <nav class="flex flex-col gap-2 overflow-y-auto">
+      <a class="flex items-center gap-3 h-12 px-3 hover:bg-primary/10 text-text-dark/90 rounded" href="#">
+        <span class="material-symbols-outlined">dashboard</span>
+        <span>Dashboard</span>
+      </a>
+      <a class="flex items-center gap-3 h-12 px-3 bg-primary/20 text-primary rounded" href="#">
+        <span class="material-symbols-outlined">calendar_month</span>
+        <span>Mi Agenda</span>
+      </a>
+      <a class="flex items-center gap-3 h-12 px-3 hover:bg-primary/10 text-text-dark/90 rounded" href="#">
+        <span class="material-symbols-outlined">groups</span>
+        <span>Pacientes</span>
+      </a>
+      <a class="flex items-center gap-3 h-12 px-3 hover:bg-primary/10 text-text-dark/90 rounded" href="#">
+        <span class="material-symbols-outlined">chat</span>
+        <span>Mensajes</span>
+      </a>
+      <a class="flex items-center gap-3 h-12 px-3 hover:bg-primary/10 text-text-dark/90 rounded" href="#">
+        <span class="material-symbols-outlined">science</span>
+        <span>Resultados</span>
+      </a>
+      <a class="flex items-center gap-3 h-12 px-3 hover:bg-primary/10 text-text-dark/90 rounded" href="#">
+        <span class="material-symbols-outlined">description</span>
+        <span>Notas</span>
+      </a>
+    </nav>
+  </div>
+
+  <div class="flex flex-col gap-2">
+    <div class="flex items-center gap-3 p-2">
+      <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCUexV-rdlrinY8S-2_Xg9qTQX7s2Pn7Y3IY31a85C4QHz5xlH4aiRSyEu4D5TWt6l6OzLbLMSay0mcwXFtGTaX38-ZYK_hZmkio-UCMKHOhSaDqZYKYuAmbDqAobEZTlw1Ykco_kF45fFUUS59f7_-dZD3eu5QKO8HNTU4h0Bh5oVBR7NBZVxiiHifAHlWds6hC4Kwipkwx3rFp9uIBcQ_rh9rn333TUybgbWvwhHyxflsh1JzpMFB471rN0JSI6F2mgkFVbnqhpMS");'></div>
+      <div class="flex flex-col">
+        <span class="font-semibold text-sm">Dr. Carlos Akle</span>
+        <span class="text-xs text-text-dark/70">Cardiólogo</span>
+      </div>
+    </div>
+    <a class="flex items-center gap-3 h-12 px-3 hover:bg-red-500/10 text-red-500 rounded" href="#">
+      <span class="material-symbols-outlined">logout</span>
+      <span>Cerrar Sesión</span>
+    </a>
+  </div>
+</aside>
+<main class="flex-1 p-4 md:p-6 lg:p-8 flex flex-col gap-6 lg:ml-64">
+  <header class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+    <div class="flex items-center gap-4">
+      <a href="#sidebar" class="lg:hidden p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700">
+        <span class="material-symbols-outlined">menu</span>
+      </a>
+      <div>
+        <h1 class="text-3xl font-bold">Seleccionar Disponibilidad Semanal</h1>
+        <p class="text-text-light/60 dark:text-text-dark/60">Define tus horarios de atención para la semana.</p>
+      </div>
+    </div>
+    <div class="flex items-center gap-2">
+      <button class="flex items-center gap-2 h-10 px-4 border border-border-light dark:border-border-dark font-semibold rounded">
+        <span>Cancelar</span>
+      </button>
+      <button id="save-btn" disabled class="flex items-center gap-2 h-10 px-4 bg-primary text-white font-semibold rounded opacity-50 cursor-not-allowed">
+        <span class="material-symbols-outlined">save</span>
+        <span>Guardar Disponibilidad</span>
+      </button>
+    </div>
+  </header>
+    <div class="window bg-surface-light dark:bg-surface-dark p-4 md:p-6 flex flex-col gap-6" x-data="scheduler()" x-init="init()">
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+        <h2 class="text-xl font-bold">Patrones Rápidos</h2>
+        <div class="flex flex-wrap gap-2">
+        <button @click="applySameToBusinessDays()" class="flex items-center gap-2 h-9 px-3 text-sm font-semibold rounded bg-primary-subtle text-primary dark:bg-primary/20">
+            <span class="material-symbols-outlined !text-base">work</span>
+            <span>Mismo horario días hábiles</span>
+        </button>
+        <button @click="copyFrom('mon')" class="flex items-center gap-2 h-9 px-3 text-sm font-semibold rounded text-text-light/70 dark:text-text-dark/70 hover:bg-border-light dark:hover:bg-border-dark">
+            <span class="material-symbols-outlined !text-base">content_copy</span>
+            <span>Copiar de Lunes</span>
+        </button>
+        <button @click="clearAll()" class="flex items-center gap-2 h-9 px-3 text-sm font-semibold rounded text-text-light/70 dark:text-text-dark/70 hover:bg-border-light dark:hover:bg-border-dark">
+            <span class="material-symbols-outlined !text-base">clear_all</span>
+            <span>Limpiar todo</span>
+        </button>
+        </div>
+    </div>
+
+    <div class="hidden lg:block overflow-x-auto">
+        <table class="w-full border-collapse text-center">
+        <thead class="border-b border-border-light dark:border-border-dark">
+            <tr>
+            <th class="p-2 md:p-3 font-semibold">Lunes</th>
+            <th class="p-2 md:p-3 font-semibold">Martes</th>
+            <th class="p-2 md:p-3 font-semibold">Miércoles</th>
+            <th class="p-2 md:p-3 font-semibold">Jueves</th>
+            <th class="p-2 md:p-3 font-semibold">Viernes</th>
+            <th class="p-2 md:p-3 font-semibold">Sábado</th>
+            <th class="p-2 md:p-3 font-semibold">Domingo</th>
+            </tr>
+        </thead>
+        <tbody>
+            <template x-for="h in hours" :key="h">
+              <tr class="border-b border-border-light dark:border-border-dark">
+                <template x-for="day in days" :key="day.key">
+                  <td class="p-1">
+                    <div class="relative">
+                      <input type="checkbox" class="time-slot sr-only" :id="slotKey(day.key,h)" :data-day="day.key" :data-hour="String(h)"
+                             x-model="selected[slotKey(day.key,h)]"
+                             @change="onManualToggle(day.key,h)"
+                             :disabled="day.disabled">
+                      <label :for="slotKey(day.key,h)" class="w-full text-sm font-medium cursor-pointer p-2 flex items-center justify-center border border-border-light dark:border-border-dark hover:bg-primary-subtle dark:hover:bg-primary/20 transition-colors"
+                             x-text="format12(h)"></label>
+                    </div>
+                  </td>
+                </template>
+              </tr>
+            </template>
+
+            <!-- fila presets -->
+            <tr>
+              <template x-for="day in days" :key="day.key">
+                <td class="p-1 pt-4">
+                  <div class="flex flex-col gap-1 items-stretch">
+                    <div class="flex flex-col gap-1">
+                      <input type="radio" class="schedule-preset sr-only" :id="`preset-${day.key}-morning`" :name="`preset-${day.key}`" @change="selectPreset(day.key,'morning')" :disabled="day.disabled">
+                      <label :for="`preset-${day.key}-morning`" class="text-xs font-semibold cursor-pointer p-2 border border-border-light dark:border-border-dark hover:bg-primary-subtle dark:hover:bg-primary/20 transition-colors">Matutino</label>
+
+                      <input type="radio" class="schedule-preset sr-only" :id="`preset-${day.key}-afternoon`" :name="`preset-${day.key}`" @change="selectPreset(day.key,'afternoon')" :disabled="day.disabled">
+                      <label :for="`preset-${day.key}-afternoon`" class="text-xs font-semibold cursor-pointer p-2 border border-border-light dark:border-border-dark hover:bg-primary-subtle dark:hover:bg-primary/20 transition-colors">Vespertino</label>
+
+                      <input type="radio" class="schedule-preset sr-only" :id="`preset-${day.key}-custom`" :name="`preset-${day.key}`" @change="clearAutoForDay(day.key)" checked :disabled="day.disabled">
+                      <label :for="`preset-${day.key}-custom`" class="text-xs font-semibold cursor-pointer p-2 border border-border-light dark:border-border-dark hover:bg-primary-subtle dark:hover:bg-primary/20 transition-colors">Personalizado</label>
+                    </div>
+                  </div>
+                </td>
+              </template>
+            </tr>
+        </tbody>
+        </table>
+    </div>
+
+    <div id="mobile-schedules" class="block lg:hidden space-y-6">
+      <template x-for="day in days" :key="day.key">
+        <section class="border-b border-border-light dark:border-border-dark pb-6">
+          <h3 class="font-bold text-lg mb-3" x-text="day.label"></h3>
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 mb-4">
+            <template x-for="h in hours" :key="h">
+              <div>
+                <input type="checkbox" class="time-slot sr-only" :id="`m-${slotKey(day.key,h)}`" :data-day="day.key" :data-hour="String(h)"
+                       x-model="selected[slotKey(day.key,h)]" @change="onManualToggle(day.key,h)" :disabled="day.disabled">
+                <label :for="`m-${slotKey(day.key,h)}`" class="w-full text-sm font-medium cursor-pointer p-2 flex items-center justify-center border border-border-light dark:border-border-dark hover:bg-primary-subtle dark:hover:bg-primary/20 transition-colors"
+                       x-text="format12(h)"></label>
+              </div>
+            </template>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <div class="flex flex-col items-stretch gap-2 w-full">
+              <button type="button" class="w-full text-left text-xs font-semibold p-2 border border-border-light dark:border-border-dark hover:bg-primary-subtle dark:hover:bg-primary/20" @click="selectPreset(day.key,'morning')" :disabled="day.disabled">Matutino</button>
+              <button type="button" class="w-full text-left text-xs font-semibold p-2 border border-border-light dark:border-border-dark hover:bg-primary-subtle dark:hover:bg-primary/20" @click="selectPreset(day.key,'afternoon')" :disabled="day.disabled">Vespertino</button>
+              <button type="button" class="w-full text-left text-xs font-semibold p-2 border border-border-light dark:border-border-dark hover:bg-primary-subtle dark:hover:bg-primary/20" @click="clearAutoForDay(day.key)" :disabled="day.disabled">Personalizado</button>
+            </div>
+          </div>
+        </section>
+      </template>
+    </div>
+
+    <div class="mt-4 flex justify-end">
+        <div class="bg-primary-subtle dark:bg-primary/20 text-primary dark:text-primary-subtle p-3 inline-flex items-center gap-2">
+        <span class="font-bold text-lg">Suma Total de Horas Disponibles:</span>
+        <span id="selected-count" class="font-black text-2xl" x-text="countSelected()"></span>
+        <div id="min-error" class="ml-4 text-sm text-red-600" x-show="countSelected() < MIN_REQUIRED">Mínimo 25 horas. Te faltan <span id="missing-count" x-text="Math.max(0, MIN_REQUIRED - countSelected())"></span>.</div>
+        </div>
+    </div>
+    </div>
+</main>
+</div>
+
+<!-- Script para abrir/cerrar menú -->
+<script>
+    const menuBtn = document.querySelector('[href="#sidebar"]');
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebar-overlay');
+
+    menuBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    sidebar.classList.toggle('-translate-x-full');
+    overlay.classList.toggle('opacity-0');
+    overlay.classList.toggle('pointer-events-none');
+    });
+
+    overlay.addEventListener('click', () => {
+    sidebar.classList.add('-translate-x-full');
+    overlay.classList.add('opacity-0');
+    overlay.classList.add('pointer-events-none');
+    });
+
+    fetch(`index.php?action=getAllHours`)
+        .then(res => res.json())
+        .then(data => {
+            const disponibles = data.map(slot => ({
+            id_disponibilidad: slot.id_disponibilidad,
+            time: slot.hora.trim()
+        }));
+    });
+</script>

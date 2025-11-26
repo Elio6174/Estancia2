@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Stitch Design</title>
+<link href="data:image/x-icon;base64," rel="icon" type="image/x-icon"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#11b4d4",
+                        "primary-subtle": "#e0f7fa",
+                        "secondary": "#f472b6",
+                        "success": "#34d399",
+                        "warning": "#fbbf24",
+                        "background-light": "#f6f8f8",
+                        "background-dark": "#101f22",
+                        "text-light": "#101f22",
+                        "text-dark": "#f6f8f8",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#1a2c2f",
+                        "border-light": "#e0e7e9",
+                        "border-dark": "#2a3c3f"
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-text-light dark:text-text-dark">
+<div class="flex min-h-screen">
+<aside class="w-64 bg-[#0d1b2a] text-white p-4 flex flex-col justify-between">
+<div>
+<div class="flex items-center gap-4 mb-8 px-2">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-12" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCUexV-rdlrinY8S-2_Xg9qTQX7s2Pn7Y3IY31a85C4QHz5xlH4aiRSyEu4D5TWt6l6OzLbLMSay0mcwXFtGTaX38-ZYK_hZmkio-UCMKHOhSaDqZYKYuAmbDqAobEZTlw1Ykco_kF45fFUUS59f7_-dZD3eu5QKO8HNTU4h0Bh5oVBR7NBZVxiiHifAHlWds6hC4Kwipkwx3rFp9uIBcQ_rh9rn333TUybgbWvwhHyxflsh1JzpMFB471rN0JSI6F2mgkFVbnqhpMS");'></div>
+<div>
+<p class="text-sm text-text-dark/70">Hola,</p>
+<h1 class="text-lg font-bold">Sofia</h1>
+</div>
+</div>
+<nav class="flex flex-col gap-2">
+<a class="flex items-center gap-3 px-4 py-3 hover:bg-primary/10 text-text-dark/90 rounded-lg" href="#">
+<span class="material-symbols-outlined">home</span>
+<span>Inicio</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 hover:bg-primary/10 text-text-dark/90 rounded-lg" href="#">
+<span class="material-symbols-outlined">person</span>
+<span>Mi Perfil</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 hover:bg-primary/10 text-text-dark/90 rounded-lg" href="#">
+<span class="material-symbols-outlined">calendar_month</span>
+<span>Agendar Cita</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 hover:bg-primary/10 text-text-dark/90 rounded-lg" href="#">
+<span class="material-symbols-outlined">list_alt</span>
+<span>Mis Citas</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 hover:bg-primary/10 text-text-dark/90 rounded-lg" href="#">
+<span class="material-symbols-outlined">notifications</span>
+<span>Notificaciones</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 hover:bg-primary/10 text-text-dark/90 rounded-lg" href="#">
+<span class="material-symbols-outlined">chat</span>
+<span>Mensajes</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 bg-primary/20 text-primary font-bold rounded-lg" href="#">
+<span class="material-symbols-outlined">quiz</span>
+<span>FAQ</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 hover:bg-primary/10 text-text-dark/90 rounded-lg" href="#">
+<span class="material-symbols-outlined">receipt_long</span>
+<span>Recetas Activas</span>
+</a>
+</nav>
+</div>
+<div>
+<a class="flex items-center gap-3 px-4 py-3 hover:bg-primary/10 text-text-dark/90 rounded-lg" href="#">
+<span class="material-symbols-outlined">folder_open</span>
+<span>Resultados/Documentos</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 mt-2 hover:bg-red-500/10 text-red-500 rounded-lg" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span>Cerrar Sesión</span>
+</a>
+</div>
+</aside>
+<main class="flex-1 p-8">
+<div class="max-w-6xl mx-auto">
+<header class="mb-8">
+<h2 class="text-4xl font-bold text-text-light dark:text-text-dark">Preguntas Frecuentes (FAQ)</h2>
+<p class="text-text-light/70 dark:text-text-dark/70 mt-2">Encuentra respuestas a las preguntas más comunes sobre nuestros servicios, citas y procedimientos.</p>
+</header>
+<div class="mb-8">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-text-light/50 dark:text-text-dark/50">search</span>
+<input class="w-full pl-10 pr-4 py-3 bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark rounded-lg focus:ring-2 focus:ring-primary focus:outline-none" placeholder="Buscar preguntas..." type="text"/>
+</div>
+</div>
+<div class="space-y-6">
+<div>
+<h3 class="text-2xl font-bold mb-4 text-text-light dark:text-text-dark">Sobre el Consultorio</h3>
+<div class="space-y-2">
+<details class="group bg-surface-light dark:bg-surface-dark rounded-lg p-4 border border-border-light dark:border-border-dark">
+<summary class="flex items-center justify-between cursor-pointer text-lg font-semibold text-text-light dark:text-text-dark">
+<span>¿Cuál es el horario de atención?</span>
+<span class="material-symbols-outlined transform transition-transform duration-200 group-open:rotate-90">chevron_right</span>
+</summary>
+<div class="mt-4 text-text-light/80 dark:text-text-dark/80">
+<p>Nuestro consultorio está abierto de Lunes a Viernes de 8:00 AM a 6:00 PM. Los Sábados atendemos de 9:00 AM a 1:00 PM. No atendemos los Domingos ni días festivos.</p>
+</div>
+</details>
+<details class="group bg-surface-light dark:bg-surface-dark rounded-lg p-4 border border-border-light dark:border-border-dark">
+<summary class="flex items-center justify-between cursor-pointer text-lg font-semibold text-text-light dark:text-text-dark">
+<span>¿Qué seguros médicos aceptan?</span>
+<span class="material-symbols-outlined transform transition-transform duration-200 group-open:rotate-90">chevron_right</span>
+</summary>
+<div class="mt-4 text-text-light/80 dark:text-text-dark/80">
+<p>Aceptamos una amplia variedad de seguros médicos. Para confirmar si aceptamos su seguro, por favor contacte a nuestro personal administrativo o revise la sección de 'Facturación y Seguros' en su perfil.</p>
+</div>
+</details>
+</div>
+</div>
+<div>
+<h3 class="text-2xl font-bold mb-4 text-text-light dark:text-text-dark">Citas y Consultas</h3>
+<div class="space-y-2">
+<details class="group bg-surface-light dark:bg-surface-dark rounded-lg p-4 border border-border-light dark:border-border-dark">
+<summary class="flex items-center justify-between cursor-pointer text-lg font-semibold text-text-light dark:text-text-dark">
+<span>¿Cómo puedo agendar una cita?</span>
+<span class="material-symbols-outlined transform transition-transform duration-200 group-open:rotate-90">chevron_right</span>
+</summary>
+<div class="mt-4 text-text-light/80 dark:text-text-dark/80">
+<p>Puede agendar una cita de tres maneras: a través de este portal del paciente en la sección 'Agendar Cita', llamando a nuestro consultorio durante el horario de atención, o directamente en nuestra recepción.</p>
+</div>
+</details>
+<details class="group bg-surface-light dark:bg-surface-dark rounded-lg p-4 border border-border-light dark:border-border-dark">
+<summary class="flex items-center justify-between cursor-pointer text-lg font-semibold text-text-light dark:text-text-dark">
+<span>¿Qué debo hacer si necesito cancelar o reprogramar mi cita?</span>
+<span class="material-symbols-outlined transform transition-transform duration-200 group-open:rotate-90">chevron_right</span>
+</summary>
+<div class="mt-4 text-text-light/80 dark:text-text-dark/80">
+<p>Le pedimos que nos notifique con al menos 24 horas de anticipación si necesita cancelar o reprogramar su cita. Puede hacerlo a través del portal del paciente o llamando a nuestro consultorio. Las cancelaciones tardías pueden estar sujetas a un cargo.</p>
+</div>
+</details>
+<details class="group bg-surface-light dark:bg-surface-dark rounded-lg p-4 border border-border-light dark:border-border-dark">
+<summary class="flex items-center justify-between cursor-pointer text-lg font-semibold text-text-light dark:text-text-dark">
+<span>¿Cómo me preparo para mi primera consulta?</span>
+<span class="material-symbols-outlined transform transition-transform duration-200 group-open:rotate-90">chevron_right</span>
+</summary>
+<div class="mt-4 text-text-light/80 dark:text-text-dark/80">
+<p>Para su primera consulta, por favor llegue 15 minutos antes para completar el papeleo. Traiga una identificación con foto, su tarjeta de seguro médico y una lista de sus medicamentos actuales. También es útil traer cualquier historial médico relevante.</p>
+</div>
+</details>
+</div>
+</div>
+<div>
+<h3 class="text-2xl font-bold mb-4 text-text-light dark:text-text-dark">Facturación y Pagos</h3>
+<div class="space-y-2">
+<details class="group bg-surface-light dark:bg-surface-dark rounded-lg p-4 border border-border-light dark:border-border-dark">
+<summary class="flex items-center justify-between cursor-pointer text-lg font-semibold text-text-light dark:text-text-dark">
+<span>¿Cómo puedo pagar mi factura?</span>
+<span class="material-symbols-outlined transform transition-transform duration-200 group-open:rotate-90">chevron_right</span>
+</summary>
+<div class="mt-4 text-text-light/80 dark:text-text-dark/80">
+<p>Puede pagar su factura en línea a través de este portal, en persona en nuestro consultorio o por teléfono. Aceptamos la mayoría de las tarjetas de crédito, débito y efectivo.</p>
+</div>
+</details>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

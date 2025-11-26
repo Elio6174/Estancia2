@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Stitch Design</title>
+<link href="data:image/x-icon;base64," rel="icon" type="image/x-icon"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#11b4d4",
+                        "primary-subtle": "#e0f7fa",
+                        "secondary": "#f472b6",
+                        "success": "#34d399",
+                        "warning": "#fbbf24",
+                        "background-light": "#f6f8f8",
+                        "background-dark": "#101f22",
+                        "text-light": "#101f22",
+                        "text-dark": "#f6f8f8",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#1a2c2f",
+                        "border-light": "#e0e7e9",
+                        "border-dark": "#2a3c3f"
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<script defer="" src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-text-light dark:text-text-dark" x-bind:class="{ 'overflow-hidden lg:overflow-auto': sidebarOpen }" x-data="{ sidebarOpen: false }">
+<div class="flex">
+<div @click="sidebarOpen = false" class="fixed inset-0 z-30 bg-black/50 lg:hidden" x-show="sidebarOpen" x-transition:enter="transition-opacity ease-linear duration-300" x-transition:enter-end="opacity-100" x-transition:enter-start="opacity-0" x-transition:leave="transition-opacity ease-linear duration-300" x-transition:leave-end="opacity-0" x-transition:leave-start="opacity-100"></div>
+<aside :class="{ 'translate-x-0': sidebarOpen }" class="fixed top-0 left-0 h-screen w-64 bg-[#0d1b2a] text-white p-4 flex flex-col justify-between z-40 transform -translate-x-full transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static">
+<div>
+<div class="flex items-center justify-between gap-4 mb-8 px-2">
+<div class="flex items-center gap-4">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-12" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCUexV-rdlrinY8S-2_Xg9qTQX7s2Pn7Y3IY31a85C4QHz5xlH4aiRSyEu4D5TWt6l6OzLbLMSay0mcwXFtGTaX38-ZYK_hZmkio-UCMKHOhSaDqZYKYuAmbDqAobEZTlw1Ykco_kF45fFUUS59f7_-dZD3eu5QKO8HNTU4h0Bh5oVBR7NBZVxiiHifAHlWds6hC4Kwipkwx3rFp9uIBcQ_rh9rn333TUybgbWvwhHyxflsh1JzpMFB471rN0JSI6F2mgkFVbnqhpMS");'></div>
+<div>
+<p class="text-sm text-text-dark/70">Hola,</p>
+<h1 class="text-lg font-bold">Sofia</h1>
+</div>
+</div>
+<button @click="sidebarOpen = false" class="lg:hidden text-white/70 hover:text-white">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<nav class="flex flex-col gap-2">
+<a class="flex items-center gap-3 px-4 py-3 hover:bg-primary/10 text-text-dark/90 rounded-lg" href="#">
+<span class="material-symbols-outlined">home</span>
+<span>Inicio</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 hover:bg-primary/10 text-text-dark/90 rounded-lg" href="#">
+<span class="material-symbols-outlined">person</span>
+<span>Mi Perfil</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 bg-primary/20 text-primary font-bold rounded-lg" href="#">
+<span class="material-symbols-outlined">calendar_month</span>
+<span>Agendar Cita</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 hover:bg-primary/10 text-text-dark/90 rounded-lg" href="#">
+<span class="material-symbols-outlined">list_alt</span>
+<span>Mis Citas</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 hover:bg-primary/10 text-text-dark/90 rounded-lg" href="#">
+<span class="material-symbols-outlined">notifications</span>
+<span>Notificaciones</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 hover:bg-primary/10 text-text-dark/90 rounded-lg" href="#">
+<span class="material-symbols-outlined">chat</span>
+<span>Mensajes</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 hover:bg-primary/10 text-text-dark/90 rounded-lg" href="#">
+<span class="material-symbols-outlined">quiz</span>
+<span>FAQ</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 hover:bg-primary/10 text-text-dark/90 rounded-lg" href="#">
+<span class="material-symbols-outlined">receipt_long</span>
+<span>Recetas Activas</span>
+</a>
+</nav>
+</div>
+<div>
+<a class="flex items-center gap-3 px-4 py-3 hover:bg-primary/10 text-text-dark/90 rounded-lg" href="#">
+<span class="material-symbols-outlined">folder_open</span>
+<span>Resultados/Documentos</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 mt-2 hover:bg-red-500/10 text-red-500 rounded-lg" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span>Cerrar Sesión</span>
+</a>
+</div>
+</aside>
+<main class="flex-1 p-4 sm:p-8 lg:h-screen lg:overflow-y-auto">
+<div class="max-w-7xl mx-auto">
+<header class="mb-8 flex items-start gap-4">
+<button @click="sidebarOpen = true" class="lg:hidden text-text-light dark:text-text-dark p-2 mt-1">
+<span class="material-symbols-outlined text-3xl">menu</span>
+</button>
+<div>
+<h2 class="text-3xl lg:text-4xl font-bold text-text-light dark:text-text-dark">Agendar Cita</h2>
+<p class="text-text-light/60 dark:text-text-dark/60 mt-1">Selecciona la especialidad, doctor, fecha y hora para tu próxima cita.</p>
+</div>
+</header>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<div class="lg:col-span-2 bg-surface-light dark:bg-surface-dark p-4 sm:p-6 rounded-lg shadow-sm">
+<div class="flex justify-between items-center mb-6">
+<h3 class="text-xl sm:text-2xl font-bold">Julio 2024</h3>
+<div class="flex items-center gap-2">
+<button class="p-2 rounded-full hover:bg-border-light dark:hover:bg-border-dark">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<button class="p-2 rounded-full hover:bg-border-light dark:hover:bg-border-dark">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+<div class="grid grid-cols-7 gap-1 text-center text-sm">
+<div class="font-bold text-sm text-text-light/60 dark:text-text-dark/60">DOM</div>
+<div class="font-bold text-sm text-text-light/60 dark:text-text-dark/60">LUN</div>
+<div class="font-bold text-sm text-text-light/60 dark:text-text-dark/60">MAR</div>
+<div class="font-bold text-sm text-text-light/60 dark:text-text-dark/60">MIE</div>
+<div class="font-bold text-sm text-text-light/60 dark:text-text-dark/60">JUE</div>
+<div class="font-bold text-sm text-text-light/60 dark:text-text-dark/60">VIE</div>
+<div class="font-bold text-sm text-text-light/60 dark:text-text-dark/60">SAB</div>
+<div class="py-2 text-text-light/40 dark:text-text-dark/40">30</div>
+<div class="py-2 relative cursor-pointer group">1 <span class="absolute bottom-1 left-1/2 -translate-x-1/2 h-1 w-1 bg-success rounded-full"></span> </div>
+<div class="py-2 relative cursor-pointer group">2 <span class="absolute bottom-1 left-1/2 -translate-x-1/2 h-1 w-1 bg-success rounded-full"></span></div>
+<div class="py-2">3</div>
+<div class="py-2 relative cursor-pointer group">4 <span class="absolute bottom-1 left-1/2 -translate-x-1/2 h-1 w-1 bg-success rounded-full"></span></div>
+<div class="py-2 relative cursor-pointer group">5 <span class="absolute bottom-1 left-1/2 -translate-x-1/2 h-1 w-1 bg-success rounded-full"></span></div>
+<div class="py-2 text-text-light/40 dark:text-text-dark/40">6</div>
+<div class="py-2 text-text-light/40 dark:text-text-dark/40">7</div>
+<div class="py-2 relative cursor-pointer group">8 <span class="absolute bottom-1 left-1/2 -translate-x-1/2 h-1 w-1 bg-success rounded-full"></span></div>
+<div class="py-2">9</div>
+<div class="py-2">10</div>
+<div class="py-2">11</div>
+<div class="py-2 relative cursor-pointer group">12 <span class="absolute bottom-1 left-1/2 -translate-x-1/2 h-1 w-1 bg-success rounded-full"></span></div>
+<div class="py-2 text-text-light/40 dark:text-text-dark/40">13</div>
+<div class="py-2 text-text-light/40 dark:text-text-dark/40">14</div>
+<div class="py-2 relative cursor-pointer group bg-primary text-white rounded-full">15</div>
+<div class="py-2">16</div>
+<div class="py-2">17</div>
+<div class="py-2 relative cursor-pointer group">18 <span class="absolute bottom-1 left-1/2 -translate-x-1/2 h-1 w-1 bg-success rounded-full"></span></div>
+<div class="py-2 relative cursor-pointer group">19 <span class="absolute bottom-1 left-1/2 -translate-x-1/2 h-1 w-1 bg-success rounded-full"></span></div>
+<div class="py-2 text-text-light/40 dark:text-text-dark/40">20</div>
+<div class="py-2 text-text-light/40 dark:text-text-dark/40">21</div>
+<div class="py-2 relative cursor-pointer group">22 <span class="absolute bottom-1 left-1/2 -translate-x-1/2 h-1 w-1 bg-success rounded-full"></span></div>
+<div class="py-2 relative cursor-pointer group">23 <span class="absolute bottom-1 left-1/2 -translate-x-1/2 h-1 w-1 bg-success rounded-full"></span></div>
+<div class="py-2">24</div>
+<div class="py-2">25</div>
+<div class="py-2 relative cursor-pointer group">26 <span class="absolute bottom-1 left-1/2 -translate-x-1/2 h-1 w-1 bg-success rounded-full"></span></div>
+<div class="py-2 text-text-light/40 dark:text-text-dark/40">27</div>
+<div class="py-2 text-text-light/40 dark:text-text-dark/40">28</div>
+<div class="py-2">29</div>
+<div class="py-2">30</div>
+<div class="py-2">31</div>
+<div class="py-2 text-text-light/40 dark:text-text-dark/40">1</div>
+<div class="py-2 text-text-light/40 dark:text-text-dark/40">2</div>
+<div class="py-2 text-text-light/40 dark:text-text-dark/40">3</div>
+</div>
+<div class="mt-8">
+<h3 class="text-lg sm:text-xl font-bold mb-4">Horarios Disponibles para el 15 de Julio</h3>
+<div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 gap-3">
+<button class="p-3 text-sm sm:text-base text-center border border-border-light dark:border-border-dark rounded-lg hover:border-primary hover:text-primary transition-colors">09:00 AM</button>
+<button class="p-3 text-sm sm:text-base text-center border border-border-light dark:border-border-dark rounded-lg hover:border-primary hover:text-primary transition-colors bg-primary/10 text-primary border-primary">10:00 AM</button>
+<button class="p-3 text-sm sm:text-base text-center border border-border-light dark:border-border-dark rounded-lg hover:border-primary hover:text-primary transition-colors">10:30 AM</button>
+<button class="p-3 text-sm sm:text-base text-center border border-border-light dark:border-border-dark rounded-lg text-text-light/40 dark:text-text-dark/40 bg-background-light dark:bg-background-dark cursor-not-allowed" disabled="">11:00 AM</button>
+<button class="p-3 text-sm sm:text-base text-center border border-border-light dark:border-border-dark rounded-lg hover:border-primary hover:text-primary transition-colors">11:30 AM</button>
+<button class="p-3 text-sm sm:text-base text-center border border-border-light dark:border-border-dark rounded-lg hover:border-primary hover:text-primary transition-colors">02:00 PM</button>
+<button class="p-3 text-sm sm:text-base text-center border border-border-light dark:border-border-dark rounded-lg hover:border-primary hover:text-primary transition-colors">02:30 PM</button>
+<button class="p-3 text-sm sm:text-base text-center border border-border-light dark:border-border-dark rounded-lg text-text-light/40 dark:text-text-dark/40 bg-background-light dark:bg-background-dark cursor-not-allowed" disabled="">03:00 PM</button>
+<button class="p-3 text-sm sm:text-base text-center border border-border-light dark:border-border-dark rounded-lg hover:border-primary hover:text-primary transition-colors">03:30 PM</button>
+<button class="p-3 text-sm sm:text-base text-center border border-border-light dark:border-border-dark rounded-lg hover:border-primary hover:text-primary transition-colors">04:00 PM</button>
+</div>
+</div>
+</div>
+<div class="bg-surface-light dark:bg-surface-dark p-4 sm:p-6 rounded-lg shadow-sm space-y-6">
+<div>
+<label class="block text-sm font-medium text-text-light/80 dark:text-text-dark/80 mb-2" for="specialty">Especialidad</label>
+<select class="w-full bg-surface-light dark:bg-surface-dark border-border-light dark:border-border-dark rounded-lg focus:ring-primary focus:border-primary" id="specialty" name="specialty">
+<option>Seleccionar especialidad</option>
+<option selected="">Consulta General</option>
+<option>Cardiología</option>
+<option>Dermatología</option>
+<option>Pediatría</option>
+</select>
+</div>
+<div>
+<label class="block text-sm font-medium text-text-light/80 dark:text-text-dark/80 mb-2" for="doctor">Doctor</label>
+<select class="w-full bg-surface-light dark:bg-surface-dark border-border-light dark:border-border-dark rounded-lg focus:ring-primary focus:border-primary" id="doctor" name="doctor">
+<option>Seleccionar doctor</option>
+<option selected="">Dr. Carlos Mendoza</option>
+<option>Dra. Elena Ríos</option>
+<option>Dr. Juan Perez</option>
+</select>
+</div>
+<div class="border-t border-border-light dark:border-border-dark pt-6">
+<h3 class="text-lg font-bold mb-4">Resumen de la Cita</h3>
+<div class="space-y-3 text-sm">
+<div class="flex justify-between">
+<span class="text-text-light/70 dark:text-text-dark/70">Especialidad:</span>
+<span class="font-semibold">Consulta General</span>
+</div>
+<div class="flex justify-between">
+<span class="text-text-light/70 dark:text-text-dark/70">Doctor:</span>
+<span class="font-semibold">Dr. Carlos Mendoza</span>
+</div>
+<div class="flex justify-between">
+<span class="text-text-light/70 dark:text-text-dark/70">Fecha:</span>
+<span class="font-semibold">Lunes, 15 de Julio</span>
+</div>
+<div class="flex justify-between">
+<span class="text-text-light/70 dark:text-text-dark/70">Hora:</span>
+<span class="font-semibold">10:00 AM</span>
+</div>
+</div>
+</div>
+<button class="w-full bg-primary text-white font-bold py-3 px-6 hover:opacity-90 transition-opacity rounded-lg flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">check_circle</span>
+<span>Confirmar Cita</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

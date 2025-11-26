@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Stitch Design</title>
+    <link href="data:image/x-icon;base64," rel="icon" type="image/x-icon" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#11b4d4",
+                        "primary-subtle": "#e0f7fa",
+                        "secondary": "#f472b6",
+                        "success": "#34d399",
+                        "warning": "#fbbf24",
+                        "background-light": "#f6f8f8",
+                        "background-dark": "#101f22",
+                        "text-light": "#101f22",
+                        "text-dark": "#f6f8f8",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#1a2c2f",
+                        "border-light": "#e0e7e9",
+                        "border-dark": "#2a3c3f"
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark font-display text-text-light dark:text-text-dark">
+    <div class="flex min-h-screen">
+        <!-- Barra lateral fija -->
+        <aside class="w-64 bg-[#0d1b2a] text-white p-4 flex flex-col justify-between fixed h-screen">
+            <div>
+                <div class="flex items-center gap-4 mb-8 px-2">
+                    <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-12"
+                        style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCUexV-rdlrinY8S-2_Xg9qTQX7s2Pn7Y3IY31a85C4QHz5xlH4aiRSyEu4D5TWt6l6OzLbLMSay0mcwXFtGTaX38-ZYK_hZmkio-UCMKHOhSaDqZYKYuAmbDqAobEZTlw1Ykco_kF45fFUUS59f7_-dZD3eu5QKO8HNTU4h0Bh5oVBR7NBZVxiiHifAHlWds6hC4Kwipkwx3rFp9uIBcQ_rh9rn333TUybgbWvwhHyxflsh1JzpMFB471rN0JSI6F2mgkFVbnqhpMS");'>
+                    </div>
+                    <div>
+                        <p class="text-sm text-text-dark/70">Hola,</p>
+			<h1 class="text-lg font-bold"><?php echo $data['alias']?></h1>
+                    </div>
+                </div>
+                <nav class="flex flex-col gap-2">
+                    <a class="flex items-center gap-3 px-4 py-3 hover:bg-primary/10 text-text-dark/90 rounded-lg"
+			<?php echo 'href="index.php?view=Inicio&idUser='.$_GET['idUser'].'"'?>>
+                        <span class="material-symbols-outlined">home</span>
+                        <span>Inicio</span>
+                    </a>
+                    <a class="flex items-center gap-3 px-4 py-3 bg-primary/20 text-primary font-bold rounded-lg"
+			<?php echo 'href="index.php?view=MiPerfil&idUser='.$_GET['idUser'].'"'?>>
+                        <span class="material-symbols-outlined">person</span>
+                        <span>Mi Perfil</span>
+                    </a>
+                    <a class="flex items-center gap-3 px-4 py-3 hover:bg-primary/10 text-text-dark/90 rounded-lg"
+			<?php echo 'href="index.php?view=AgendarCita&idUser='.$_GET['idUser'].'"'?>>
+                        <span class="material-symbols-outlined">calendar_month</span>
+                        <span>Agendar Cita</span>
+                    </a>
+                    <a class="flex items-center gap-3 px-4 py-3 hover:bg-primary/10 text-text-dark/90 rounded-lg"
+			<?php echo 'href="index.php?view=MisCitas&idUser='.$_GET['idUser'].'"'?>>
+                        <span class="material-symbols-outlined">list_alt</span>
+                        <span>Mis Citas</span>
+                    </a>
+                    <a class="flex items-center gap-3 px-4 py-3 hover:bg-primary/10 text-text-dark/90 rounded-lg"
+			<?php echo 'href="index.php?view=Notificaciones&idUser='.$_GET['idUser'].'"'?>>
+                        <span class="material-symbols-outlined">notifications</span>
+                        <span>Notificaciones</span>
+                    </a>
+                    <a class="flex items-center gap-3 px-4 py-3 hover:bg-primary/10 text-text-dark/90 rounded-lg"
+			<?php echo 'href="index.php?view=Mensajes&idUser='.$_GET['idUser'].'"'?>>
+                        <span class="material-symbols-outlined">chat</span>
+                        <span>Mensajes</span>
+                    </a>
+                    <a class="flex items-center gap-3 px-4 py-3 hover:bg-primary/10 text-text-dark/90 rounded-lg"
+                        href="#">
+                        <span class="material-symbols-outlined">quiz</span>
+                        <span>FAQ</span>
+                    </a>
+                    <a class="flex items-center gap-3 px-4 py-3 hover:bg-primary/10 text-text-dark/90 rounded-lg"
+                        href="#">
+                        <span class="material-symbols-outlined">receipt_long</span>
+                        <span>Recetas Activas</span>
+                    </a>
+                </nav>
+            </div>
+            <div>
+                <a class="flex items-center gap-3 px-4 py-3 hover:bg-primary/10 text-text-dark/90 rounded-lg" href="#">
+                    <span class="material-symbols-outlined">folder_open</span>
+                    <span>Resultados/Documentos</span>
+                </a>
+                <a class="flex items-center gap-3 px-4 py-3 mt-2 hover:bg-red-500/10 text-red-500 rounded-lg" href="#">
+                    <span class="material-symbols-outlined">logout</span>
+                    <span>Cerrar Sesión</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Contenido desplazable -->
+        <main class="flex-1 p-8 ml-64 overflow-y-auto">
+            <div class="max-w-4xl mx-auto">
+                <header class="mb-8">
+                    <h2 class="text-4xl font-bold text-text-light dark:text-text-dark">Mi Perfil</h2>
+                </header>
+                <div class="bg-surface-light dark:bg-surface-dark p-8 shadow-sm rounded-lg">
+                    <form>
+                        <div class="space-y-8">
+                            <div>
+                                <h3
+                                    class="text-xl font-bold mb-6 text-text-light dark:text-text-dark border-b border-border-light dark:border-border-dark pb-3">
+                                    Información Personal
+                                </h3>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div>
+                                        <label
+                                            class="block text-sm font-medium text-text-light/80 dark:text-text-dark/80 mb-1"
+                                            for="fullName">Nombre Completo</label>
+                                        <input
+                                            class="w-full bg-background-light dark:bg-background-dark border-border-light dark:border-border-dark rounded-md shadow-sm focus:ring-primary focus:border-primary"
+						    id="fullName" type="text" <?php echo 'value="'.$data['nombre'].'"'?> />
+                                    </div>
+                                    <div>
+                                        <label
+                                            class="block text-sm font-medium text-text-light/80 dark:text-text-dark/80 mb-1"
+                                            for="email">Correo Electrónico</label>
+                                        <input
+                                            class="w-full bg-background-light dark:bg-background-dark border-border-light dark:border-border-dark rounded-md shadow-sm focus:ring-primary focus:border-primary"
+						    id="email" type="email" <?php echo 'value="'.$data['correo'].'"'?> disabled/>
+                                    </div>
+                                    <div>
+                                        <label
+                                            class="block text-sm font-medium text-text-light/80 dark:text-text-dark/80 mb-1"
+                                            for="phone">Teléfono</label>
+                                        <input
+                                            class="w-full bg-background-light dark:bg-background-dark border-border-light dark:border-border-dark rounded-md shadow-sm focus:ring-primary focus:border-primary"
+						    id="phone" type="tel" <?php echo 'value="'.$data['telefono'].'"'?> />
+                                    </div>
+                                    <div>
+                                        <label
+                                            class="block text-sm font-medium text-text-light/80 dark:text-text-dark/80 mb-1"
+                                            for="address">Dirección</label>
+                                        <input
+                                            class="w-full bg-background-light dark:bg-background-dark border-border-light dark:border-border-dark rounded-md shadow-sm focus:ring-primary focus:border-primary"
+						    id="address" type="text" <?php echo 'value="'.$data['direccion'].'"'?> />
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <h3
+                                    class="text-xl font-bold mb-6 text-text-light dark:text-text-dark border-b border-border-light dark:border-border-dark pb-3">
+                                    Detalles Médicos
+                                </h3>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div>
+                                        <label
+                                            class="block text-sm font-medium text-text-light/80 dark:text-text-dark/80 mb-1"
+                                            for="bloodType">Tipo de Sangre</label>
+                                        <input
+                                            class="w-full bg-background-light dark:bg-background-dark border-border-light dark:border-border-dark rounded-md shadow-sm focus:ring-primary focus:border-primary"
+						    id="bloodType" type="text" <?php echo 'value="'.$data['tipo_sangre'].'"'?> />
+                                    </div>
+                                    <div>
+                                        <label
+                                            class="block text-sm font-medium text-text-light/80 dark:text-text-dark/80 mb-1"
+                                            for="allergies">Alergias Conocidas</label>
+                                        <input
+                                            class="w-full bg-background-light dark:bg-background-dark border-border-light dark:border-border-dark rounded-md shadow-sm focus:ring-primary focus:border-primary"
+                                            id="allergies" type="text" value="Penicilina, Nueces" />
+                                    </div>
+                                    <div class="md:col-span-2">
+                                        <label
+                                            class="block text-sm font-medium text-text-light/80 dark:text-text-dark/80 mb-1"
+                                            for="medications">Medicamentos Actuales</label>
+                                        <textarea
+                                            class="w-full bg-background-light dark:bg-background-dark border-border-light dark:border-border-dark rounded-md shadow-sm focus:ring-primary focus:border-primary"
+                                            id="medications" rows="3">Loratadina 10mg (diario)</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-10 flex justify-end gap-4">
+                            <button
+                                class="bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark text-text-light dark:text-text-dark font-bold py-3 px-6 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors rounded-lg"
+                                type="button">Cambiar Contraseña</button>
+                            <button
+                                class="bg-primary text-white font-bold py-3 px-6 hover:opacity-90 transition-opacity rounded-lg"
+                                type="submit">Guardar Cambios</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
+

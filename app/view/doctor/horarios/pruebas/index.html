@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Disponibilidad Semanal - Clínica Bienestar</title>
+<link href="data:image/x-icon;base64," rel="icon" type="image/x-icon"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#11b4d4",
+                        "primary-subtle": "#e0f7fa",
+                        "secondary": "#f472b6",
+                        "success": "#34d399",
+                        "warning": "#fbbf24",
+                        "background-light": "#f6f8f8",
+                        "background-dark": "#101f22",
+                        "text-light": "#101f22",
+                        "text-dark": "#f6f8f8",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#1a2c2f",
+                        "border-light": "#e0e7e9",
+                        "border-dark": "#2a3c3f"
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0rem",
+                        "lg": "0rem",
+                        "xl": "0rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+        }
+        .window {
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        :target ~ #sidebar-overlay {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        :target #sidebar {
+            transform: translateX(0);
+        }
+        :target {
+            overflow: hidden;
+        }
+        .time-slot:checked+label {
+            background-color: #11b4d4;color: white;
+            border-color: #11b4d4;}
+        html.dark .time-slot:checked+label {
+            background-color: #11b4d4;color: #101f22;}
+        .time-slot:disabled+label {
+            background-color: #f3f4f6;
+            cursor: not-allowed;
+            color: #9ca3af;
+            border-color: transparent;
+        }
+        html.dark .time-slot:disabled+label {
+            background-color: rgba(0,0,0,0.2);
+            color: #4b5563;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-text-light dark:text-text-dark" id="page-container">
+<div class="flex min-h-screen">
+<a class="fixed inset-0 bg-black/60 z-30 opacity-0 pointer-events-none lg:hidden transition-opacity duration-300" href="#page-container" id="sidebar-overlay"></a>
+<aside class="w-64 bg-[#0d1b2a] text-white p-4 flex flex-col justify-between fixed lg:relative lg:translate-x-0 h-full -translate-x-full lg:transition-none transition-transform duration-300 z-40" id="sidebar">
+<div>
+<div class="flex items-center gap-4 mb-8 p-2">
+<div class="bg-primary/20 p-2 rounded-full">
+<span class="material-symbols-outlined text-primary !text-2xl">health_and_safety</span>
+</div>
+<span class="font-bold text-xl">Clínica Bienestar</span>
+</div>
+<nav class="flex flex-col gap-2">
+<a class="flex items-center gap-3 h-12 px-3 hover:bg-primary/10 text-text-dark/90 rounded" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-3 h-12 px-3 bg-primary/20 text-primary rounded" href="#">
+<span class="material-symbols-outlined">calendar_month</span>
+<span>Mi Agenda</span>
+</a>
+<a class="flex items-center gap-3 h-12 px-3 hover:bg-primary/10 text-text-dark/90 rounded" href="#">
+<span class="material-symbols-outlined">groups</span>
+<span>Pacientes</span>
+</a>
+<a class="flex items-center gap-3 h-12 px-3 hover:bg-primary/10 text-text-dark/90 rounded" href="#">
+<span class="material-symbols-outlined">chat</span>
+<span>Mensajes</span>
+</a>
+<a class="flex items-center gap-3 h-12 px-3 hover:bg-primary/10 text-text-dark/90 rounded" href="#">
+<span class="material-symbols-outlined">science</span>
+<span>Resultados</span>
+</a>
+<a class="flex items-center gap-3 h-12 px-3 hover:bg-primary/10 text-text-dark/90 rounded" href="#">
+<span class="material-symbols-outlined">description</span>
+<span>Notas</span>
+</a>
+</nav>
+</div>
+<div class="flex flex-col gap-2">
+<div class="flex items-center gap-3 p-2">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCUexV-rdlrinY8S-2_Xg9qTQX7s2Pn7Y3IY31a85C4QHz5xlH4aiRSyEu4D5TWt6l6OzLbLMSay0mcwXFtGTaX38-ZYK_hZmkio-UCMKHOhSaDqZYKYuAmbDqAobEZTlw1Ykco_kF45fFUUS59f7_-dZD3eu5QKO8HNTU4h0Bh5oVBR7NBZVxiiHifAHlWds6hC4Kwipkwx3rFp9uIBcQ_rh9rn333TUybgbWvwhHyxflsh1JzpMFB471rN0JSI6F2mgkFVbnqhpMS");'></div>
+<div class="flex flex-col">
+<span class="font-semibold text-sm">Dr. Carlos Akle</span>
+<span class="text-xs text-text-dark/70">Cardiólogo</span>
+</div>
+</div>
+<a class="flex items-center gap-3 h-12 px-3 hover:bg-red-500/10 text-red-500 rounded" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span>Cerrar Sesión</span>
+</a>
+</div>
+</aside>
+<main class="flex-1 p-4 md:p-6 lg:p-8 flex flex-col gap-6">
+<header class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+<div class="flex items-center gap-4">
+<a class="lg:hidden p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700" href="#sidebar">
+<span class="material-symbols-outlined">menu</span>
+</a>
+<div>
+<h1 class="text-3xl font-bold">Seleccionar Disponibilidad Semanal</h1>
+<p class="text-text-light/60 dark:text-text-dark/60">Define tus horarios de atención para la semana.</p>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<button class="flex items-center gap-2 h-10 px-4 border border-border-light dark:border-border-dark font-semibold rounded">
+<span>Cancelar</span>
+</button>
+<button class="flex items-center gap-2 h-10 px-4 bg-primary text-white font-semibold rounded">
+<span class="material-symbols-outlined">save</span>
+<span>Guardar Disponibilidad</span>
+</button>
+</div>
+</header>
+<div class="window bg-surface-light dark:bg-surface-dark p-4 md:p-6 flex flex-col gap-6">
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+<h2 class="text-xl font-bold">Patrones Rápidos</h2>
+<div class="flex flex-wrap gap-2">
+<button class="flex items-center gap-2 h-9 px-3 text-sm font-semibold rounded bg-primary-subtle text-primary dark:bg-primary/20">
+<span class="material-symbols-outlined !text-base">work</span>
+<span>Mismo horario días hábiles</span>
+</button>
+<button class="flex items-center gap-2 h-9 px-3 text-sm font-semibold rounded text-text-light/70 dark:text-text-dark/70 hover:bg-border-light dark:hover:bg-border-dark">
+<span class="material-symbols-outlined !text-base">content_copy</span>
+<span>Copiar de Lunes</span>
+</button>
+<button class="flex items-center gap-2 h-9 px-3 text-sm font-semibold rounded text-text-light/70 dark:text-text-dark/70 hover:bg-border-light dark:hover:bg-border-dark">
+<span class="material-symbols-outlined !text-base">clear_all</span>
+<span>Limpiar todo</span>
+</button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full border-collapse text-center">
+<thead class="border-b border-border-light dark:border-border-dark">
+<tr>
+<th class="p-2 md:p-3 font-semibold w-28">Hora</th>
+<th class="p-2 md:p-3 font-semibold">Lunes</th>
+<th class="p-2 md:p-3 font-semibold">Martes</th>
+<th class="p-2 md:p-3 font-semibold">Miércoles</th>
+<th class="p-2 md:p-3 font-semibold">Jueves</th>
+<th class="p-2 md:p-3 font-semibold">Viernes</th>
+<th class="p-2 md:p-3 font-semibold">Sábado</th>
+<th class="p-2 md:p-3 font-semibold">Domingo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="border-b border-border-light dark:border-border-dark"><td class="p-2 md:p-3 text-sm text-text-light/80 dark:text-text-dark/80 font-medium">08:00 AM</td><td class="p-1"><input class="time-slot sr-only" id="mon-0800" type="checkbox"/><label class="w-full text-sm font-medium cursor-pointer p-2 flex items-center justify-center border border-border-light dark:border-border-dark hover:bg-primary-subtle dark:hover:bg-primary/20 transition-colors" for="mon-0800">08:00 AM</label></td><td class="p-1"><input class="time-slot sr-only" id="tue-0800" type="checkbox"/><label class="w-full text-sm font-medium cursor-pointer p-2 flex items-center justify-center border border-border-light dark:border-border-dark hover:bg-primary-subtle dark:hover:bg-primary/20 transition-colors" for="tue-0800">08:00 AM</label></td><td class="p-1"><input class="time-slot sr-only" id="wed-0800" type="checkbox"/><label class="w-full text-sm font-medium cursor-pointer p-2 flex items-center justify-center border border-border-light dark:border-border-dark hover:bg-primary-subtle dark:hover:bg-primary/20 transition-colors" for="wed-0800">08:00 AM</label></td><td class="p-1"><input class="time-slot sr-only" id="thu-0800" type="checkbox"/><label class="w-full text-sm font-medium cursor-pointer p-2 flex items-center justify-center border border-border-light dark:border-border-dark hover:bg-primary-subtle dark:hover:bg-primary/20 transition-colors" for="thu-0800">08:00 AM</label></td><td class="p-1"><input checked="" class="time-slot sr-only" id="fri-0800" type="checkbox"/><label class="w-full text-sm font-medium cursor-pointer p-2 flex items-center justify-center border border-border-light dark:border-border-dark hover:bg-primary-subtle dark:hover:bg-primary/20 transition-colors" for="fri-0800">08:00 AM</label></td><td class="p-1"><input class="time-slot sr-only" disabled="" id="sat-0800" type="checkbox"/><label class="w-full text-sm font-medium p-2 flex items-center justify-center" for="sat-0800">08:00 AM</label></td><td class="p-1"><input class="time-slot sr-only" disabled="" id="sun-0800" type="checkbox"/><label class="w-full text-sm font-medium p-2 flex items-center justify-center" for="sun-0800">08:00 AM</label></td></tr>
+<tr class="border-b border-border-light dark:border-border-dark"><td class="p-2 md:p-3 text-sm text-text-light/80 dark:text-text-dark/80 font-medium">09:00 AM</td><td class="p-1"><input checked="" class="time-slot sr-only" id="mon-0900" type="checkbox"/><label class="w-full text-sm font-medium cursor-pointer p-2 flex items-center justify-center border border-border-light dark:border-border-dark hover:bg-primary-subtle dark:hover:bg-primary/20 transition-colors" for="mon-0900">09:00 AM</label></td><td class="p-1"><input checked="" class="time-slot sr-only" id="tue-0900" type="checkbox"/><label class="w-full text-sm font-medium cursor-pointer p-2 flex items-center justify-center border border-border-light dark:border-border-dark hover:bg-primary-subtle dark:hover:bg-primary/20 transition-colors" for="tue-0900">09:00 AM</label></td><td class="p-1"><input class="time-slot sr-only" id="wed-0900" type="checkbox"/><label class="w-full text-sm font-medium cursor-pointer p-2 flex items-center justify-center border border-border-light dark:border-border-dark hover:bg-primary-subtle dark:hover:bg-primary/20 transition-colors" for="wed-0900">09:00 AM</label></td><td class="p-1"><input checked="" class="time-slot sr-only" id="thu-0900" type="checkbox"/><label class="w-full text-sm font-medium cursor-pointer p-2 flex items-center justify-center border border-border-light dark:border-border-dark hover:bg-primary-subtle dark:hover:bg-primary/20 transition-colors" for="thu-0900">09:00 AM</label></td><td class="p-1"><input checked="" class="time-slot sr-only" id="fri-0900" type="checkbox"/><label class="w-full text-sm font-medium cursor-pointer p-2 flex items-center justify-center border border-border-light dark:border-border-dark hover:bg-primary-subtle dark:hover:bg-primary/20 transition-colors" for="fri-0900">09:00 AM</label></td><td class="p-1"><input class="time-slot sr-only" disabled="" id="sat-0900" type="checkbox"/><label class="w-full text-sm font-medium p-2 flex items-center justify-center" for="sat-0900">09:00 AM</label></td><td class="p-1"><input class="time-slot sr-only" disabled="" id="sun-0900" type="checkbox"/><label class="w-full text-sm font-medium p-2 flex items-center justify-center" for="sun-0900">09:00 AM</label></td></tr>
+<tr class="border-b border-border-light dark:border-border-dark"><td class="p-2 md:p-3 text-sm text-text-light/80 dark:text-text-dark/80 font-medium">10:00 AM</td><td class="p-1"><input checked="" class="time-slot sr-only" id="mon-1000" type="checkbox"/><label class="w-full text-sm font-medium cursor-pointer p-2 flex items-center justify-center border border-border-light dark:border-border-dark hover:bg-primary-subtle dark:hover:bg-primary/20 transition-colors" for="mon-1000">10:00 AM</label></td><td class="p-1"><input checked="" class="time-slot sr-only" id="tue-1000" type="checkbox"/><label class="w-full text-sm font-medium cursor-pointer p-2 flex items-center justify-center border border-border-light dark:border-border-dark hover:bg-primary-subtle dark:hover:bg-primary/20 transition-colors" for="tue-1000">10:00 AM</label></td><td class="p-1"><input class="time-slot sr-only" id="wed-1000" type="checkbox"/><label class="w-full text-sm font-medium cursor-pointer p-2 flex items-center justify-center border border-border-light dark:border-border-dark hover:bg-primary-subtle dark:hover:bg-primary/20 transition-colors" for="wed-1000">10:00 AM</label></td><td class="p-1"><input checked="" class="time-slot sr-only" id="thu-1000" type="checkbox"/><label class="w-full text-sm font-medium cursor-pointer p-2 flex items-center justify-center border border-border-light dark:border-border-dark hover:bg-primary-subtle dark:hover:bg-primary/20 transition-colors" for="thu-1000">10:00 AM</label></td><td class="p-1"><input class="time-slot sr-only" id="fri-1000" type="checkbox"/><label class="w-full text-sm font-medium cursor-pointer p-2 flex items-center justify-center border border-border-light dark:border-border-dark hover:bg-primary-subtle dark:hover:bg-primary/20 transition-colors" for="fri-1000">10:00 AM</label></td><td class="p-1"><input class="time-slot sr-only" disabled="" id="sat-1000" type="checkbox"/><label class="w-full text-sm font-medium p-2 flex items-center justify-center" for="sat-1000">10:00 AM</label></td><td class="p-1"><input class="time-slot sr-only" disabled="" id="sun-1000" type="checkbox"/><label class="w-full text-sm font-medium p-2 flex items-center justify-center" for="sun-1000">10:00 AM</label></td></tr>
+<tr class="border-b border-border-light dark:border-border-dark"><td class="p-2 md:p-3 text-sm text-text-light/80 dark:text-text-dark/80 font-medium">11:00 AM</td><td class="p-1"><input class="time-slot sr-only" id="mon-1100" type="checkbox"/><label class="w-full text-sm font-medium cursor-pointer p-2 flex items-center justify-center border border-border-light dark:border-border-dark hover:bg-primary-subtle dark:hover:bg-primary/20 transition-colors" for="mon-1100">11:00 AM</label></td><td class="p-1"><input class="time-slot sr-only" id="tue-1100" type="checkbox"/><label class="w-full text-sm font-medium cursor-pointer p-2 flex items-center justify-center border border-border-light dark:border-border-dark hover:bg-primary-subtle dark:hover:bg-primary/20 transition-colors" for="tue-1100">11:00 AM</label></td><td class="p-1"><input class="time-slot sr-only" id="wed-1100" type="checkbox"/><label class="w-full text-sm font-medium cursor-pointer p-2 flex items-center justify-center border border-border-light dark:border-border-dark hover:bg-primary-subtle dark:hover:bg-primary/20 transition-colors" for="wed-1100">11:00 AM</label></td><td class="p-1"><input checked="" class="time-slot sr-only" id="thu-1100" type="checkbox"/><label class="w-full text-sm font-medium cursor-pointer p-2 flex items-center justify-center border border-border-light dark:border-border-dark hover:bg-primary-subtle dark:hover:bg-primary/20 transition-colors" for="thu-1100">11:00 AM</label></td><td class="p-1"><input class="time-slot sr-only" id="fri-1100" type="checkbox"/><label class="w-full text-sm font-medium cursor-pointer p-2 flex items-center justify-center border border-border-light dark:border-border-dark hover:bg-primary-subtle dark:hover:bg-primary/20 transition-colors" for="fri-1100">11:00 AM</label></td><td class="p-1"><input class="time-slot sr-only" disabled="" id="sat-1100" type="checkbox"/><label class="w-full text-sm font-medium p-2 flex items-center justify-center" for="sat-1100">11:00 AM</label></td><td class="p-1"><input class="time-slot sr-only" disabled="" id="sun-1100" type="checkbox"/><label class="w-full text-sm font-medium p-2 flex items-center justify-center" for="sun-1100">11:00 AM</label></td></tr>
+<tr class="border-b border-border-light dark:border-border-dark"><td class="p-2 md:p-3 text-sm text-text-light/80 dark:text-text-dark/80 font-medium">12:00 PM</td><td class="p-1"><input class="time-slot sr-only" id="mon-1200" type="checkbox"/><label class="w-full text-sm font-medium cursor-pointer p-2 flex items-center justify-center border border-border-light dark:border-border-dark hover:bg-primary-subtle dark:hover:bg-primary/20 transition-colors" for="mon-1200">12:00 PM</label></td><td class="p-1"><input class="time-slot sr-only" id="tue-1200" type="checkbox"/><label class="w-full text-sm font-medium cursor-pointer p-2 flex items-center justify-center border border-border-light dark:border-border-dark hover:bg-primary-subtle dark:hover:bg-primary/20 transition-colors" for="tue-1200">12:00 PM</label></td><td class="p-1"><input class="time-slot sr-only" id="wed-1200" type="checkbox"/><label class="w-full text-sm font-medium cursor-pointer p-2 flex items-center justify-center border border-border-light dark:border-border-dark hover:bg-primary-subtle dark:hover:bg-primary/20 transition-colors" for="wed-1200">12:00 PM</label></td><td class="p-1"><input checked="" class="time-slot sr-only" id="thu-1200" type="checkbox"/><label class="w-full text-sm font-medium cursor-pointer p-2 flex items-center justify-center border border-border-light dark:border-border-dark hover:bg-primary-subtle dark:hover:bg-primary/20 transition-colors" for="thu-1200">12:00 PM</label></td><td class="p-1"><input class="time-slot sr-only" id="fri-1200" type="checkbox"/><label class="w-full text-sm font-medium cursor-pointer p-2 flex items-center justify-center border border-border-light dark:border-border-dark hover:bg-primary-subtle dark:hover:bg-primary/20 transition-colors" for="fri-1200">12:00 PM</label></td><td class="p-1"><input class="time-slot sr-only" disabled="" id="sat-1200" type="checkbox"/><label class="w-full text-sm font-medium p-2 flex items-center justify-center" for="sat-1200">12:00 PM</label></td><td class="p-1"><input class="time-slot sr-only" disabled="" id="sun-1200" type="checkbox"/><label class="w-full text-sm font-medium p-2 flex items-center justify-center" for="sun-1200">12:00 PM</label></td></tr>
+<tr class="border-b border-border-light dark:border-border-dark"><td class="p-2 md:p-3 text-sm text-text-light/80 dark:text-text-dark/80 font-medium">01:00 PM</td><td class="p-1"><input class="time-slot sr-only" id="mon-1300" type="checkbox"/><label class="w-full text-sm font-medium cursor-pointer p-2 flex items-center justify-center border border-border-light dark:border-border-dark hover:bg-primary-subtle dark:hover:bg-primary/20 transition-colors" for="mon-1300">01:00 PM</label></td><td class="p-1"><input class="time-slot sr-only" id="tue-1300" type="checkbox"/><label class="w-full text-sm font-medium cursor-pointer p-2 flex items-center justify-center border border-border-light dark:border-border-dark hover:bg-primary-subtle dark:hover:bg-primary/20 transition-colors" for="tue-1300">01:00 PM</label></td><td class="p-1"><input class="time-slot sr-only" id="wed-1300" type="checkbox"/><label class="w-full text-sm font-medium cursor-pointer p-2 flex items-center justify-center border border-border-light dark:border-border-dark hover:bg-primary-subtle dark:hover:bg-primary/20 transition-colors" for="wed-1300">01:00 PM</label></td><td class="p-1"><input class="time-slot sr-only" id="thu-1300" type="checkbox"/><label class="w-full text-sm font-medium cursor-pointer p-2 flex items-center justify-center border border-border-light dark:border-border-dark hover:bg-primary-subtle dark:hover:bg-primary/20 transition-colors" for="thu-1300">01:00 PM</label></td><td class="p-1"><input class="time-slot sr-only" id="fri-1300" type="checkbox"/><label class="w-full text-sm font-medium cursor-pointer p-2 flex items-center justify-center border border-border-light dark:border-border-dark hover:bg-primary-subtle dark:hover:bg-primary/20 transition-colors" for="fri-1300">01:00 PM</label></td><td class="p-1"><input class="time-slot sr-only" disabled="" id="sat-1300" type="checkbox"/><label class="w-full text-sm font-medium p-2 flex items-center justify-center" for="sat-1300">01:00 PM</label></td><td class="p-1"><input class="time-slot sr-only" disabled="" id="sun-1300" type="checkbox"/><label class="w-full text-sm font-medium p-2 flex items-center justify-center" for="sun-1300">01:00 PM</label></td></tr>
+<tr class="border-b border-border-light dark:border-border-dark"><td class="p-2 md:p-3 text-sm text-text-light/80 dark:text-text-dark/80 font-medium">02:00 PM</td><td class="p-1"><input checked="" class="time-slot sr-only" id="mon-1400" type="checkbox"/><label class="w-full text-sm font-medium cursor-pointer p-2 flex items-center justify-center border border-border-light dark:border-border-dark hover:bg-primary-subtle dark:hover:bg-primary/20 transition-colors" for="mon-1400">02:00 PM</label></td><td class="p-1"><input checked="" class="time-slot sr-only" id="tue-1400" type="checkbox"/><label class="w-full text-sm font-medium cursor-pointer p-2 flex items-center justify-center border border-border-light dark:border-border-dark hover:bg-primary-subtle dark:hover:bg-primary/20 transition-colors" for="tue-1400">02:00 PM</label></td><td class="p-1"><input class="time-slot sr-only" id="wed-1400" type="checkbox"/><label class="w-full text-sm font-medium cursor-pointer p-2 flex items-center justify-center border border-border-light dark:border-border-dark hover:bg-primary-subtle dark:hover:bg-primary/20 transition-colors" for="wed-1400">02:00 PM</label></td><td class="p-1"><input class="time-slot sr-only" id="thu-1400" type="checkbox"/><label class="w-full text-sm font-medium cursor-pointer p-2 flex items-center justify-center border border-border-light dark:border-border-dark hover:bg-primary-subtle dark:hover:bg-primary/20 transition-colors" for="thu-1400">02:00 PM</label></td><td class="p-1"><input class="time-slot sr-only" id="fri-1400" type="checkbox"/><label class="w-full text-sm font-medium cursor-pointer p-2 flex items-center justify-center border border-border-light dark:border-border-dark hover:bg-primary-subtle dark:hover:bg-primary/20 transition-colors" for="fri-1400">02:00 PM</label></td><td class="p-1"><input class="time-slot sr-only" disabled="" id="sat-1400" type="checkbox"/><label class="w-full text-sm font-medium p-2 flex items-center justify-center" for="sat-1400">02:00 PM</label></td><td class="p-1"><input class="time-slot sr-only" disabled="" id="sun-1400" type="checkbox"/><label class="w-full text-sm font-medium p-2 flex items-center justify-center" for="sun-1400">02:00 PM</label></td></tr>
+<tr class="border-b border-border-light dark:border-border-dark"><td class="p-2 md:p-3 text-sm text-text-light/80 dark:text-text-dark/80 font-medium">03:00 PM</td><td class="p-1"><input checked="" class="time-slot sr-only" id="mon-1500" type="checkbox"/><label class="w-full text-sm font-medium cursor-pointer p-2 flex items-center justify-center border border-border-light dark:border-border-dark hover:bg-primary-subtle dark:hover:bg-primary/20 transition-colors" for="mon-1500">03:00 PM</label></td><td class="p-1"><input checked="" class="time-slot sr-only" id="tue-1500" type="checkbox"/><label class="w-full text-sm font-medium cursor-pointer p-2 flex items-center justify-center border border-border-light dark:border-border-dark hover:bg-primary-subtle dark:hover:bg-primary/20 transition-colors" for="tue-1500">03:00 PM</label></td><td class="p-1"><input class="time-slot sr-only" id="wed-1500" type="checkbox"/><label class="w-full text-sm font-medium cursor-pointer p-2 flex items-center justify-center border border-border-light dark:border-border-dark hover:bg-primary-subtle dark:hover:bg-primary/20 transition-colors" for="wed-1500">03:00 PM</label></td><td class="p-1"><input class="time-slot sr-only" id="thu-1500" type="checkbox"/><label class="w-full text-sm font-medium cursor-pointer p-2 flex items-center justify-center border border-border-light dark:border-border-dark hover:bg-primary-subtle dark:hover:bg-primary/20 transition-colors" for="thu-1500">03:00 PM</label></td><td class="p-1"><input class="time-slot sr-only" id="fri-1500" type="checkbox"/><label class="w-full text-sm font-medium cursor-pointer p-2 flex items-center justify-center border border-border-light dark:border-border-dark hover:bg-primary-subtle dark:hover:bg-primary/20 transition-colors" for="fri-1500">03:00 PM</label></td><td class="p-1"><input class="time-slot sr-only" disabled="" id="sat-1500" type="checkbox"/><label class="w-full text-sm font-medium p-2 flex items-center justify-center" for="sat-1500">03:00 PM</label></td><td class="p-1"><input class="time-slot sr-only" disabled="" id="sun-1500" type="checkbox"/><label class="w-full text-sm font-medium p-2 flex items-center justify-center" for="sun-1500">03:00 PM</label></td></tr>
+<tr class=""><td class="p-2 md:p-3 text-sm text-text-light/80 dark:text-text-dark/80 font-medium">04:00 PM</td><td class="p-1"><input class="time-slot sr-only" id="mon-1600" type="checkbox"/><label class="w-full text-sm font-medium cursor-pointer p-2 flex items-center justify-center border border-border-light dark:border-border-dark hover:bg-primary-subtle dark:hover:bg-primary/20 transition-colors" for="mon-1600">04:00 PM</label></td><td class="p-1"><input class="time-slot sr-only" id="tue-1600" type="checkbox"/><label class="w-full text-sm font-medium cursor-pointer p-2 flex items-center justify-center border border-border-light dark:border-border-dark hover:bg-primary-subtle dark:hover:bg-primary/20 transition-colors" for="tue-1600">04:00 PM</label></td><td class="p-1"><input class="time-slot sr-only" id="wed-1600" type="checkbox"/><label class="w-full text-sm font-medium cursor-pointer p-2 flex items-center justify-center border border-border-light dark:border-border-dark hover:bg-primary-subtle dark:hover:bg-primary/20 transition-colors" for="wed-1600">04:00 PM</label></td><td class="p-1"><input class="time-slot sr-only" id="thu-1600" type="checkbox"/><label class="w-full text-sm font-medium cursor-pointer p-2 flex items-center justify-center border border-border-light dark:border-border-dark hover:bg-primary-subtle dark:hover:bg-primary/20 transition-colors" for="thu-1600">04:00 PM</label></td><td class="p-1"><input class="time-slot sr-only" id="fri-1600" type="checkbox"/><label class="w-full text-sm font-medium cursor-pointer p-2 flex items-center justify-center border border-border-light dark:border-border-dark hover:bg-primary-subtle dark:hover:bg-primary/20 transition-colors" for="fri-1600">04:00 PM</label></td><td class="p-1"><input class="time-slot sr-only" disabled="" id="sat-1600" type="checkbox"/><label class="w-full text-sm font-medium p-2 flex items-center justify-center" for="sat-1600">04:00 PM</label></td><td class="p-1"><input class="time-slot sr-only" disabled="" id="sun-1600" type="checkbox"/><label class="w-full text-sm font-medium p-2 flex items-center justify-center" for="sun-1600">04:00 PM</label></td></tr>
+</tbody>
+</table>
+</div>
+<div class="mt-4 flex justify-end">
+<div class="bg-primary-subtle dark:bg-primary/20 text-primary dark:text-primary-subtle p-3 inline-flex items-center gap-2">
+<span class="font-bold text-lg">Suma Total de Horas Disponibles:</span>
+<span class="font-black text-2xl">14</span>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>
