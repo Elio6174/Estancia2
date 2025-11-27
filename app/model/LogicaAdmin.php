@@ -31,7 +31,6 @@ class LogicaAdmin {
         }
     }
 
-    // =============== DASHBOARD ===========================
     public function getDashboardData() {
         $query = "
             SELECT 
@@ -52,6 +51,12 @@ class LogicaAdmin {
         include "app/view/administrador/Dashboard/index.html";
     }
 
+    //Recibe el id de usuario
+    //Obtiene el estado de la consulta
+    //Devuelve false o true dependiendo el estado de la consulta
+    //Si el id de usuario a elimianr es igual al id del usuario
+    //actual no permite realizar la consulta esto para evitar 
+    //que el administrador pueda borrar su propia cuenta
     public function deleteUser(){
         $idAEliminar = $_POST['id'];
         if ($idAEliminar == $_SESSION['id_usuario']) {
@@ -68,8 +73,12 @@ class LogicaAdmin {
         return $statement;
     }
 
+    //No recibe nada
+    //Obtiene el total de citas segun su especialidad
+    //Devuelve la informacion de la consula 
     public function getAppointmentsBySpecialty(){
-        $sentencia = "SELECT e.nombre AS especialidad, COALESCE(COUNT(c.id_cita), 0) AS total_citas FROM especialidades e LEFT JOIN citas c ON e.id_especialidad = c.id_especialidad
+        $sentencia = "SELECT e.nombre AS especialidad, COALESCE(COUNT(c.id_cita), 0) AS 
+            total_citas FROM especialidades e LEFT JOIN citas c ON e.id_especialidad = c.id_especialidad
             GROUP BY e.id_especialidad, e.nombre ORDER BY total_citas DESC";
         $statement = $this->connection->prepare($sentencia);
         $statement->execute();
@@ -77,9 +86,16 @@ class LogicaAdmin {
         return $result->fetch_all(MYSQLI_ASSOC);
     }
     
+    //No recibe nada
+    //Obtiene el total de citas por mes dividiendo por semenana
+    //Devuelve la informacion de la consulta
+    //Este metodo regresa 4 valores las 4 semanas de un mes, el mes actual
+    //cada columna tiene el total de citas por semana
     public function getAppointmentsByMonth(){
-        $sentencia = "SELECT semanas.semana, COALESCE(c.total, 0) AS total FROM (SELECT 1 AS semana UNION SELECT 2 UNION SELECT 3 UNION SELECT 4) AS semanas LEFT JOIN (
-            SELECT CEIL(DAY(fecha_cita) / 7) AS semana,COUNT(*) AS total FROM citas WHERE MONTH(fecha_cita) = MONTH(CURDATE()) AND YEAR(fecha_cita) = YEAR(CURDATE()) GROUP BY semana) AS c
+        $sentencia = "SELECT semanas.semana, COALESCE(c.total, 0) AS total FROM (SELECT 1 AS semana 
+            UNION SELECT 2 UNION SELECT 3 UNION SELECT 4) AS semanas LEFT JOIN (SELECT CEIL(DAY(fecha_cita) / 7) 
+            AS semana,COUNT(*) AS total FROM citas WHERE MONTH(fecha_cita) = MONTH(CURDATE()) AND 
+            YEAR(fecha_cita) = YEAR(CURDATE()) GROUP BY semana) AS c
             ON c.semana = semanas.semana ORDER BY semanas.semana";
         $statement = $this->connection->prepare($sentencia);
         $statement->execute();
@@ -190,23 +206,34 @@ class LogicaAdmin {
     }
 
 
+    //No recibe nada
+    //Obtiene la informacion de los doctores concatendando Dr. o Dra 
+    //dependiendo el genero
+    //Devuelve la informacion de lso doctores
     public function getDoctors() {
-        $sql = "SELECT d.id_doctor, CASE WHEN pd.sexo = 'Femenino' THEN CONCAT('Dra. ', pd.nombre) ELSE CONCAT('Dr. ', pd.nombre) END AS nombre FROM doctores d INNER JOIN personas pd ON pd.id_persona = d.id_persona ORDER BY pd.nombre";
+        $sql = "SELECT d.id_doctor, CASE WHEN pd.sexo = 'Femenino' THEN 
+            CONCAT('Dra. ', pd.nombre) ELSE CONCAT('Dr. ', pd.nombre) END 
+            AS nombre FROM doctores d INNER JOIN personas pd ON 
+            pd.id_persona = d.id_persona ORDER BY pd.nombre";
         $stmt = $this->connection->prepare($sql);
         $stmt->execute();
         return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     }
 
+    //Recibe el id de la cita
+    //Obtiene el estado de la consulta
+    //Devuelve el false o true dependiendo el estado de la consulta
     public function deleteAppointment($id){
         $stmt = $this->connection->prepare("DELETE FROM citas WHERE id_cita = ?");
         $stmt->bind_param("i", $id);
         $stmt->execute();
         return ["success" => $stmt->affected_rows > 0];
     }
-
-
     
 
+    //Recibe page, limit que siempre es 5, y filtros de la consulta
+    //Obtiene datos de la cosnulta segun los filtros
+    //Devuelve los datos haciendo el calculo de cuantos registros va a mostrar
     public function getUsers($page, $limit, $filters){
         list($where, $params, $types) = $this->buildUserFilters($filters);
         $total = $this->countUsers($where, $params, $types);
@@ -220,6 +247,8 @@ class LogicaAdmin {
         ];
     }
 
+    //Recibe los filtros
+    //Devuelve la estructura con where para la consulta a la base de datos
     private function buildUserFilters($filters){
         $where = " WHERE 1=1 ";
         $params = [];
@@ -242,6 +271,9 @@ class LogicaAdmin {
         return [$where, $params, $types];
     }
 
+    //Recibe filtros, parametros y tipos de usuaros
+    //Obtiene el total de usuarios segun el tipo y el filtro ingresado
+    //Devuelve el total de usuarios que obtiene
     private function countUsers($where, $params, $types){
         $sql = "
             SELECT COUNT(*) AS total 
@@ -272,57 +304,50 @@ class LogicaAdmin {
         return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     }
 
+    //Recibe los datos del usuario, nombre y rol
+    //Obtiene el estado de la consulta 
+    //Devuelve false o true dependiendo el estado de la consulta
+    //Este metodo es usado para cambiar la informacion del usuario si se cambia 
+    //de paciente a doctor entonces borra el registro que existe en la tabla paciente
+    //y crea uno en la tabla doctor lo mismo si pasa de doctor a paciente
     public function updateUser($data){
         if (empty($data['id_usuario']) || empty($data['nombre']) || empty($data['rol'])) {
             return ["status" => "error", "message" => "Datos incompletos"];
         }
-
         $id_usuario = $data['id_usuario'];
         $nombre     = $data['nombre'];
         $nuevoRol   = $data['rol'];
-
-        // Obtener id_persona
         $sqlPersona = "SELECT id_persona FROM personas WHERE id_usuario = ?";
         $stmt = $this->connection->prepare($sqlPersona);
         $stmt->bind_param("i", $id_usuario);
         $stmt->execute();
         $id_persona = $stmt->get_result()->fetch_assoc()['id_persona'];
-
         if (!$id_persona) {
             return ["status" => "error", "message" => "No se encontró persona"];
         }
-
-        // Obtener rol actual
         $sqlRol = "SELECT rol FROM usuarios WHERE id_usuario = ?";
         $stmt = $this->connection->prepare($sqlRol);
         $stmt->bind_param("i", $id_usuario);
         $stmt->execute();
         $rol_actual = $stmt->get_result()->fetch_assoc()['rol'];
 
-        // 1. Actualizar usuario
         $sql1 = "UPDATE usuarios SET rol = ? WHERE id_usuario = ?";
         $stmt1 = $this->connection->prepare($sql1);
         $stmt1->bind_param("si", $nuevoRol, $id_usuario);
         $ok1 = $stmt1->execute();
 
-        // 2. Actualizar nombre
         $sql2 = "UPDATE personas SET nombre = ? WHERE id_usuario = ?";
         $stmt2 = $this->connection->prepare($sql2);
         $stmt2->bind_param("si", $nombre, $id_usuario);
         $ok2 = $stmt2->execute();
 
-        // 3. Cambiar rol correctamente
         if ($rol_actual !== $nuevoRol) {
 
-            // ---- DE PACIENTE A DOCTOR ----
             if ($nuevoRol === "doctor") {
 
-                // Eliminar si existe en pacientes
                 $delPac = $this->connection->prepare("DELETE FROM pacientes WHERE id_persona = ?");
                 $delPac->bind_param("i", $id_persona);
                 $delPac->execute();
-
-                // Insertar en doctores (poner valores por defecto)
                 $insDoc = $this->connection->prepare(
                     "INSERT INTO doctores (id_persona, id_especialidad, cedula_profesional, consultorio)
                     VALUES (?, 1, NULL, NULL)"
@@ -330,16 +355,11 @@ class LogicaAdmin {
                 $insDoc->bind_param("i", $id_persona);
                 $insDoc->execute();
             }
-
-            // ---- DE DOCTOR A PACIENTE ----
             if ($nuevoRol === "paciente") {
-
-                // Eliminar si existe en doctores
                 $delDoc = $this->connection->prepare("DELETE FROM doctores WHERE id_persona = ?");
                 $delDoc->bind_param("i", $id_persona);
                 $delDoc->execute();
 
-                // Insertar en pacientes
                 $insPac = $this->connection->prepare(
                     "INSERT INTO pacientes (id_persona, tipo_sangre) VALUES (?, NULL)"
                 );
@@ -355,7 +375,9 @@ class LogicaAdmin {
         return ["status" => "error", "message" => "No se pudo actualizar"];
     }
 
-
+    //No recibe nada 
+    //Obtiene el total de pacientes
+    //Devuelve el total de pacientes segun la consulta
     public function countPacientes(){
         $sentencia = "select COUNT(*) as total from usuarios where rol='paciente'";
         $statement = $this->connection->prepare($sentencia);
@@ -403,6 +425,9 @@ class LogicaAdmin {
         return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     }
 
+    //Recibe las tablas a hacer respaldo
+    //Obtiene la informacion de las tablas
+    //Devuelve un archivo con toda la informacion de la base de datos
     public function backup_tables($tables){
         $orderedTables = [
             'usuarios',
@@ -426,14 +451,10 @@ CREATE DATABASE clinica_citas_db;
 USE clinica_citas_db;
         
         ";
-
         foreach ($tables as $table){
             $resCreate = $this->connection->query('SHOW CREATE TABLE '.$table);
             $row2 = mysqli_fetch_row($resCreate);
-
             $return .= "\n\n" . $row2[1] . ";\n\n";
-
-            // INSERTS
             $result = $this->connection->query('SELECT * FROM '.$table);
             $num_fields = mysqli_num_fields($result);
             while ($row = mysqli_fetch_row($result)){
@@ -457,48 +478,17 @@ USE clinica_citas_db;
 
 
 
-
+    //No recibe nada 
+    //Obtiene la informacion de los pacientes nombre, telefono,
+    //correo, direccion, genero
+    //Devuelve la informacion de la consulta
     public function consultarPacientes() {
-    $sentencia = "SELECT 
-    pa.id_paciente,
-    per.nombre,
-    per.telefono,
-    per.fecha_nacimiento,
-    per.sexo,
-    per.direccion,
-    u.correo,
-    pa.tipo_sangre
-FROM pacientes pa
-INNER JOIN personas per ON pa.id_persona = per.id_persona
-INNER JOIN usuarios u ON per.id_usuario = u.id_usuario
-ORDER BY per.nombre ASC;
-";
-
-    $statement = $this->connection->prepare($sentencia);
-    $statement->execute();
-    $result = $statement->get_result();
-
-    return $result->fetch_all(MYSQLI_ASSOC);
-}
-
-    public function consultarDoctores() {
-        $sentencia = "SELECT 
-                d.id_doctor,
-                per.nombre,
-                per.telefono,
-                per.fecha_nacimiento,
-                per.sexo,
-                per.direccion,
-                u.correo,
-                esp.nombre AS especialidad,
-                d.cedula_profesional,
-                d.consultorio
-            FROM doctores d
-            INNER JOIN personas per ON d.id_persona = per.id_persona
+        $sentencia = "SELECT pa.id_paciente,per.nombre,per.telefono, 
+            per.fecha_nacimiento, per.sexo, per.direccion, u.correo,
+            pa.tipo_sangre FROM pacientes pa
+            INNER JOIN personas per ON pa.id_persona = per.id_persona
             INNER JOIN usuarios u ON per.id_usuario = u.id_usuario
-            INNER JOIN especialidades esp ON d.id_especialidad = esp.id_especialidad
             ORDER BY per.nombre ASC";
-
         $statement = $this->connection->prepare($sentencia);
         $statement->execute();
         $result = $statement->get_result();
@@ -506,6 +496,28 @@ ORDER BY per.nombre ASC;
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
+    //No recibe nada
+    //Obtiene la informacion de los doctores, nombre, telefono, fecha de nacimiento
+    //correo, especialidad, cedula
+    //Devuelve la informacion de los doctores segun la consulta
+    public function consultarDoctores() {
+        $sentencia = "SELECT d.id_doctor,per.nombre, per.telefono,per.fecha_nacimiento,
+            per.sexo,per.direccion,u.correo,esp.nombre AS especialidad,d.cedula_profesional,
+            d.consultorio FROM doctores d
+            INNER JOIN personas per ON d.id_persona = per.id_persona
+            INNER JOIN usuarios u ON per.id_usuario = u.id_usuario
+            INNER JOIN especialidades esp ON d.id_especialidad = esp.id_especialidad
+            ORDER BY per.nombre ASC";
+        $statement = $this->connection->prepare($sentencia);
+        $statement->execute();
+        $result = $statement->get_result();
+
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    //No recibe nada 
+    //Obtiene el total de pacientes segun el genero
+    //Devuelve el total de pacientes por genero
     public function conteoPacientesPorGenero() {
         $sql = "SELECT 
                     COALESCE(per.sexo, 'Sin especificar') AS sexo,
@@ -529,6 +541,9 @@ ORDER BY per.nombre ASC;
         return $conteos;
     }
 
+    //No recibe nada
+    //Obtiene el total de doctores por genero
+    //Devuelve el total de doctores segun el genero
     public function conteoDoctoresPorGenero() {
         $sql = "SELECT 
                     COALESCE(per.sexo, 'Sin especificar') AS sexo,
@@ -552,6 +567,10 @@ ORDER BY per.nombre ASC;
         return $conteos;
     }
 
+
+    //Recibe la infomracion de pacientes
+    //Obtiene grafica de estadisticas segun el genero 
+    //Devuelve documento en pdf
     public function generarPDFPacientes($data){
         $img = $this->generarGraficaGeneroPacientes();
         $conteos = $this->conteoPacientesPorGenero();
@@ -683,6 +702,9 @@ ORDER BY per.nombre ASC;
         }
     }
 
+    //Recibe inidio, fin, doctor
+    //Obtiene las citas segun el filtro aplicado
+    //Devuelve la informacion de las citas
     public function consultarCitas($inicio, $fin, $doctor){
         $sentencia = "SELECT 
                 c.id_cita,
@@ -700,7 +722,7 @@ ORDER BY per.nombre ASC;
             INNER JOIN pacientes p ON c.id_paciente = p.id_paciente
             INNER JOIN personas per ON p.id_persona = per.id_persona
             INNER JOIN doctores d ON c.id_doctor = d.id_doctor
-            INNER JOIN personas per_d ON d.id_persona = per_d.id_persona   -- ← FIX
+            INNER JOIN personas per_d ON d.id_persona = per_d.id_persona
             INNER JOIN especialidades esp ON c.id_especialidad = esp.id_especialidad
             INNER JOIN disponibilidad dis ON c.id_disponibilidad = dis.id_disponibilidad
             INNER JOIN horas h ON dis.id_hora = h.id_hora
@@ -738,6 +760,8 @@ ORDER BY per.nombre ASC;
     }
 
 
+    //Recibe la informacion de las citas, filtros de inicio y fin y doctor
+    //Devuelve pdf con la informacion de las citas junto con grafica de estadisticas 
     public function generarPDFCitas($data, $inicio, $fin, $doctor){
         if (empty($inicio) && empty($fin)) {
             $titulo = "Reporte de Citas (Todos los registros)";
@@ -821,6 +845,9 @@ ORDER BY per.nombre ASC;
         $pdf->Output('D', $nombreArchivo);
     }
 
+    //Recibe inicio y fin de fechas
+    //Obtiene el total de citas de todos los doctores segun las fechas
+    //Devuelve el total de las citas segun la consulta
     public function consultarCitasPorDoctor($inicio = null, $fin = null){
         $sentencia = "SELECT 
                 per.nombre AS doctor,
@@ -856,7 +883,9 @@ ORDER BY per.nombre ASC;
     }
 
 
-
+    //Recibe inicio y fin siendo variables de fechas definidas por rango
+    //Obtiene los datos del total de citas de todos los doctores
+    //Devuelve un vector con el nombre del doctor y el total de citas
     public function datosGraficaCitasDoctor($inicio = null, $fin = null){
         $rows = $this->consultarCitasPorDoctor($inicio, $fin);
 
@@ -869,7 +898,9 @@ ORDER BY per.nombre ASC;
 
 
 
-
+    //Recibe inicio y fin siendo variables de fechas en un rango
+    //Obtiene los datos del total de citas por doctor
+    //Devuelve una imagen con la grafica de pastel 
     public function generarGraficaCitasPorDoctor($inicio = null, $fin = null){
         $data = $this->datosGraficaCitasDoctor($inicio, $fin);
         if (empty($data)) {
@@ -899,6 +930,9 @@ ORDER BY per.nombre ASC;
         return $filename;
     }
 
+    //No recibe nada
+    //Obtiene el total de personas segun el genero
+    //Devuelve una imagen con una grafica en pastel de los generos
     public function generarGraficaGeneroPacientes() {
         $sql = "SELECT per.sexo, COUNT(*) AS total
                 FROM pacientes pa
@@ -927,6 +961,9 @@ ORDER BY per.nombre ASC;
         return $filename;
     }
 
+    //No recibe nada
+    //Obtiene el total de doctores segun el genero
+    //Devuelve una imagen con una grafica de pastel 
     public function generarGraficaGeneroDoctores() {
         $sql = "SELECT per.sexo, COUNT(*) AS total
                 FROM doctores d
@@ -955,6 +992,9 @@ ORDER BY per.nombre ASC;
         return $filename;
     }
 
+    //Recibe el id de usuario
+    //Obtiene la informacion del usuario , nombre, fecha de nacimiento
+    //Devuele los datos segun la conuslta realizada
     public function obtenerDatos($id_usuario){
         $sentencia = "SELECT
                 pa.id_paciente,
@@ -969,7 +1009,6 @@ ORDER BY per.nombre ASC;
             INNER JOIN personas p ON pa.id_persona = p.id_persona
             INNER JOIN usuarios u ON p.id_usuario = u.id_usuario
             WHERE u.id_usuario = ?";
-
         $statement = $this->connection->prepare($sentencia);
         $statement->bind_param("i", $id_usuario);
         $statement->execute();
@@ -1023,6 +1062,9 @@ ORDER BY per.nombre ASC;
 
 
 
+    //Recibe la ruta de un archivo
+    //Obtiene un el estado de la actualizacion
+    //Devuelve false o true dependiendo el estado de la consulta
     public function executeSqlFile($filepath){
         $templine = '';
         $lines = file($filepath);
@@ -1049,17 +1091,6 @@ ORDER BY per.nombre ASC;
 
         return true;
     }
-
-
-
-
-
-
-
-
-
-
-
 
 
 }
